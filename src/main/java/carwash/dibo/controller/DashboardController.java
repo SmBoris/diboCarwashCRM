@@ -1,5 +1,7 @@
 package carwash.dibo.controller;
 
+import carwash.dibo.integration.NatureliaOrderService;
+import carwash.dibo.integration.WeatherService;
 import carwash.dibo.validator.DashboardValidator;
 import carwash.dibo.common.AutoChemistryGoods;
 import carwash.dibo.model.Malfunctions;

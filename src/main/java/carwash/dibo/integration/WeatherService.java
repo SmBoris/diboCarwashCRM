@@ -1,4 +1,4 @@
-package carwash.dibo.service;
+package carwash.dibo.integration;
 
 import org.json.JSONException;
 

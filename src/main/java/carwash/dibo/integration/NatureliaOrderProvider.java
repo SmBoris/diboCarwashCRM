@@ -1,6 +1,5 @@
 package carwash.dibo.integration;
 
-import carwash.dibo.service.NatureliaOrderService;
 import carwash.dibo.utils.ParamsHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +15,7 @@ import java.util.Map;
 
 @Component
 @Slf4j
-public class NatureliaWaterOrderProvider implements NatureliaOrderService {
+public class NatureliaOrderProvider implements NatureliaOrderService {
     private final static String DEFAULT_AUTH_LINK = "https://naturelia.net/login/";
     private final static String AUTH_LINK_CHECKER = "https://naturelia.net/account/";
     private final static String RE_ORDER_LINK = "https://naturelia.net/index.php?route=account/order/reorderall&";
@@ -30,8 +29,8 @@ public class NatureliaWaterOrderProvider implements NatureliaOrderService {
 
     private List<String> cookies;
 
-    public NatureliaWaterOrderProvider(@Value("${naturelia.username}") String login_email,
-                                       @Value(value = "${naturelia.password}") String password) {
+    public NatureliaOrderProvider(@Value("${naturelia.username}") String login_email,
+                                  @Value(value = "${naturelia.password}") String password) {
         LOGIN_EMAIL = login_email;
         PASSWORD = password;
     }
@@ -82,7 +81,6 @@ public class NatureliaWaterOrderProvider implements NatureliaOrderService {
 
         return htmlText.toString().contains("Мои заказы");
     }
-
 
     private ResponseEntity<String> addWaterToCart() {
         String url = RE_ORDER_LINK + ORDER_ID;

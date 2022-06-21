@@ -1,7 +1,5 @@
-package carwash.dibo.impl;
+package carwash.dibo.integration;
 
-import carwash.dibo.integration.WeatherProvider;
-import carwash.dibo.service.WeatherService;
 import lombok.AllArgsConstructor;
 import org.json.JSONException;
 import org.springframework.stereotype.Service;

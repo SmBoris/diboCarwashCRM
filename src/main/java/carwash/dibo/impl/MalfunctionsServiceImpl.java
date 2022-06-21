@@ -51,6 +51,8 @@ public class MalfunctionsServiceImpl implements MalfunctionsService {
         malfunctions.setUser(userService.getCurrentUser());
         malfunctions.setResolved(false);
         malfunctionsRepository.save(malfunctions);
+        log.info("The new malfunction added: " + malfunctions.getCategory().getName() +
+                " by" + malfunctions.getUser().getUsername());
     }
 
     @Override
@@ -58,5 +60,6 @@ public class MalfunctionsServiceImpl implements MalfunctionsService {
         malfunctions.setResolved(true);
         malfunctions.setClosedDate(new Date());
         malfunctionsRepository.save(malfunctions);
+        log.info("The malfunction is resolved from: " + malfunctions.getCategory().getName());
     }
 }

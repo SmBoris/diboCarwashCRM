@@ -24,5 +24,5 @@ public class AdditionalExpense {
 
     private String description;
 
-    private int value;
+    private int cost;
 }

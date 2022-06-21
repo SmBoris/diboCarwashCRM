@@ -32,6 +32,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
         workingDay.setOpenDate(new Date());
         workingDay.setOpen(true);
         save(workingDay);
+        log.info("Employee: " + workingDay.getUser().getUsername() + " open work shift at " + LocalDate.now());
     }
 
     @Override
@@ -43,6 +44,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
         openDay.setOpen(false);
         openDay.setCloseDate(new Date());
         workingDayRepository.save(openDay);
+        log.info("Employee: " + openDay.getUser().getUsername() + " closed shift at: " + LocalDate.now());
     }
 
     @Override
@@ -66,19 +68,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     public List<WorkingDay> getLastSevenDays(){
-        List<WorkingDay> allDays = workingDayRepository.findAll();
-        List<WorkingDay> lastSevenDays = new ArrayList<>();
-
-        if (allDays.size() < 8) {
-            Collections.reverse(allDays);
-            return allDays;
-        }
-
-        for (int i = allDays.size() - 1; i > allDays.size() - 9; i--) {
-            lastSevenDays.add(allDays.get(i));
-        }
-
-        return lastSevenDays;
+        return workingDayRepository.findTop7ByOrderByIdDesc();
     }
 
     @Override

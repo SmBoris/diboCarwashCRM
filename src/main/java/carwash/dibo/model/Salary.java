@@ -5,7 +5,9 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.Month;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,5 +22,13 @@ public class Salary {
     @ManyToOne
     private User user;
 
-    private int valueOfSalary;
+    private Month month;
+
+    private int value;
+
+    private boolean payed;
+
+    private int workShiftCount;
+
+    private int betPerDay;
 }

@@ -12,4 +12,5 @@ public interface WorkingDayRepository extends JpaRepository<WorkingDay, Long> {
     List<WorkingDay> findByOpenTrue();
 
     WorkingDay findTopByOrderByIdDesc();
+    List<WorkingDay> findTop7ByOrderByIdDesc();
 }

@@ -3,7 +3,9 @@ package carwash.dibo.controller;
 import carwash.dibo.common.AutoChemistryStatuses;
 import carwash.dibo.exception.CantBeNegativeException;
 import carwash.dibo.model.AutoChemistry;
+import carwash.dibo.model.UtilityBills;
 import carwash.dibo.service.AutoChemistryService;
+import carwash.dibo.service.UtilityBillsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TablesController {
     private final AutoChemistryService autoChemistryService;
+    private final UtilityBillsService utilityBillsService;
 
     @GetMapping("/tables")
     public String getTables(){
@@ -24,8 +27,13 @@ public class TablesController {
     }
 
     @ModelAttribute("autoChemistryList")
-    public List<AutoChemistry> getAutoChemical() throws Exception {
+    public List<AutoChemistry> getAutoChemical() {
         return autoChemistryService.getLast4Rows();
+    }
+
+    @ModelAttribute("utilityBillsList")
+    public List<UtilityBills> getUtilityBills() {
+        return utilityBillsService.getLast4Rows();
     }
 
     @PostMapping("/refueled")

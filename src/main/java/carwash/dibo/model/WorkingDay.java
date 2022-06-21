@@ -22,6 +22,7 @@ public class WorkingDay {
     private int diboCoins;
     private int cashOnBox;
     private int nonCash;
+
     private boolean open;
 
     @ManyToOne(cascade = CascadeType.ALL)

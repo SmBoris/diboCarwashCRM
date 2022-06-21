@@ -39,5 +39,5 @@ public class User {
     private final List<Malfunctions> breakDowns = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private final List<PayrollOfSalary> payroll = new ArrayList<>();
+    private final List<Salary> salary = new ArrayList<>();
 }
