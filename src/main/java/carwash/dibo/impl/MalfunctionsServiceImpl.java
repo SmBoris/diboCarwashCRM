@@ -6,6 +6,8 @@ import carwash.dibo.service.MalfunctionsService;
 import carwash.dibo.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ public class MalfunctionsServiceImpl implements MalfunctionsService {
         return malfunctions;
     }
 
+    @CacheEvict(value = "malfList", allEntries = true)
     @Override
     public void addMalfunction(Malfunctions malfunctions) {
         malfunctions.setOpenDate(new Date());
@@ -55,6 +58,7 @@ public class MalfunctionsServiceImpl implements MalfunctionsService {
                 " by" + malfunctions.getUser().getUsername());
     }
 
+    @CacheEvict(value = "malfList", allEntries = true)
     @Override
     public void closeMalfunction(Malfunctions malfunctions) {
         malfunctions.setResolved(true);

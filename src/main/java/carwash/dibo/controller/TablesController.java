@@ -1,12 +1,11 @@
 package carwash.dibo.controller;
 
-import carwash.dibo.common.AutoChemistryStatuses;
-import carwash.dibo.exception.CantBeNegativeException;
 import carwash.dibo.model.AutoChemistry;
 import carwash.dibo.model.UtilityBills;
 import carwash.dibo.service.AutoChemistryService;
 import carwash.dibo.service.UtilityBillsService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,23 +25,20 @@ public class TablesController {
         return "tables";
     }
 
+    @Cacheable(value = "chemistryList")
     @ModelAttribute("autoChemistryList")
     public List<AutoChemistry> getAutoChemical() {
         return autoChemistryService.getLast4Rows();
     }
 
+    @Cacheable(value = "billsList")
     @ModelAttribute("utilityBillsList")
     public List<UtilityBills> getUtilityBills() {
         return utilityBillsService.getLast4Rows();
     }
 
     @PostMapping("/refueled")
-    public String refueled(@ModelAttribute AutoChemistry autoChemistry, BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes, Model model){
-        if (bindingResult.hasErrors()){
-            model.addAttribute("error", "Неверно введены параметры");
-            return "tables";
-        }
+    public String refueled(@ModelAttribute AutoChemistry autoChemistry, RedirectAttributes redirectAttributes){
 
         redirectAttributes.addFlashAttribute("autoChemistry", autoChemistry);
 
@@ -50,32 +46,12 @@ public class TablesController {
     }
 
     @GetMapping("/refueled/success")
-    public String redirectedRefueled(@ModelAttribute AutoChemistry autoChemistry, BindingResult bindingResult, Model model) throws CantBeNegativeException {
+    public String redirectedRefueled(@ModelAttribute AutoChemistry autoChemistry, Model model) {
 
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("errorData", "Неверно введены параметры");
-            return "tables";
-        }
+        String message = autoChemistryService
+                .refueled(autoChemistry.getName(), autoChemistry.getQuantityToChange(), autoChemistry.getStatus());
 
-        if (autoChemistry.getStatus().equals(AutoChemistryStatuses.PURCHASE)) {
-            autoChemistryService.addPurchase(autoChemistry.getName(), autoChemistry.getQuantityToChange());
-            model.addAttribute("successPurchase", autoChemistry.getName() + " успешно добавлена");
-            return "redirect:/tables";
-        }
-
-        if (autoChemistry.getStatus().equals(AutoChemistryStatuses.REFUELED)) {
-            try {
-                autoChemistryService.refueled(autoChemistry.getName(), autoChemistry.getQuantityToChange());
-            }
-            catch (CantBeNegativeException e){
-                model.addAttribute("errorRefueled", "Невозможно заправить больше, чем наличие на складе");
-                return "tables";
-            }
-
-            model.addAttribute("successRefueled", autoChemistry.getName() + " успешно списана");
-
-            return "redirect:/tables";
-        }
+        model.addAttribute("refueledMessage", message);
 
         return "redirect:/tables";
     }

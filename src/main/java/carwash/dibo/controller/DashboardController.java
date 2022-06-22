@@ -3,12 +3,13 @@ package carwash.dibo.controller;
 import carwash.dibo.integration.NatureliaOrderService;
 import carwash.dibo.integration.WeatherService;
 import carwash.dibo.validator.DashboardValidator;
-import carwash.dibo.common.AutoChemistryGoods;
+import carwash.dibo.common.AutoChemistryGood;
 import carwash.dibo.model.Malfunctions;
 import carwash.dibo.model.WorkingDay;
 import carwash.dibo.service.*;
 import lombok.AllArgsConstructor;
 import org.json.JSONException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,24 +41,28 @@ public class DashboardController {
         return weatherService.getCurrentTemperature();
     }
 
+    @Cacheable("workingDaysList")
     @ModelAttribute("oneWeekWorkingList")
     public List<WorkingDay> getWorkingDays() {
         return workingDayService.getLastSevenDays();
     }
 
+    @Cacheable("foamAvailable")
     @ModelAttribute("storeQuantityFoam")
     public int getCurrentQuantityFoam(){
-        return storeQuantityService.getCurrentQuantityByName(AutoChemistryGoods.ACTIVE_FOAM.getName());
+        return storeQuantityService.getCurrentQuantityByName(AutoChemistryGood.ACTIVE_FOAM.getName());
     }
 
+    @Cacheable("malfList")
     @ModelAttribute("malfunctionsList")
     public List<Malfunctions> getAllByOpenByDate(){
         return malfunctionsService.findAllByOpenByDateDesc();
     }
 
+    @Cacheable("waxAvailable")
     @ModelAttribute("storeQuantityWax")
     public int getCurrentQuantityWax(){
-        return storeQuantityService.getCurrentQuantityByName(AutoChemistryGoods.WAX.getName());
+        return storeQuantityService.getCurrentQuantityByName(AutoChemistryGood.WAX.getName());
     }
 
 

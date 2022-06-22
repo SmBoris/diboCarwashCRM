@@ -1,6 +1,6 @@
 package carwash.dibo.model;
 
-import carwash.dibo.common.AutoChemistryStatuses;
+import carwash.dibo.common.AutoChemistryStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,13 +21,13 @@ public class AutoChemistry {
     private int quantityToChange;
 
     @Enumerated
-    private AutoChemistryStatuses status;
+    private AutoChemistryStatus status;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
     private int currentQuantity;
 
     public boolean isPurchase(){
-        return getStatus().equals(AutoChemistryStatuses.PURCHASE);
+        return getStatus().equals(AutoChemistryStatus.PURCHASE);
     }
 }

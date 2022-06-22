@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum AutoChemistryStatuses {
+public enum AutoChemistryStatus {
     REFUELED("Заправить в бочку"),
     PURCHASE("Добавить на склад");
 

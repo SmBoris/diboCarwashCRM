@@ -44,7 +44,7 @@
             <div class="navbar-holder d-flex align-items-center justify-content-between w-100">
               <!-- Navbar Header-->
               <div class="navbar-header">
-                <!-- Navbar Brand --><a class="navbar-brand d-none d-sm-inline-block" th:href="@{/emploee}">
+                <!-- Navbar Brand --><a class="navbar-brand d-none d-sm-inline-block" th:href="@{/dashboard}">
                   <div class="brand-text d-none d-lg-inline-block"><span>Dibo</span><strong>Dashboard</strong></div>
                   <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>Dibo</strong></div></a>
                 <!-- Toggle Button--><a class="menu-btn active" id="toggle-btn" href="#"><span></span><span></span><span></span></a>
@@ -145,7 +145,7 @@
           </div>
           <!-- Sidebar Navidation Menus--><span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Main</span>
           <ul class="list-unstyled py-4">
-            <li class="sidebar-item"><a class="sidebar-link" th:href="@{/employee}">
+            <li class="sidebar-item"><a class="sidebar-link" th:href="@{/dashboard}">
                 <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                   <use xlink:href="#real-estate-1"> </use>
                 </svg>Главная страница</a></li>
@@ -266,10 +266,7 @@
                         </div>
                       </div>
                       <h3 class="h4 mb-0">Выберите действие</h3>
-                      <h3 class="h4 mb-0 text-red" th:text="${error}">Ошибка ввода данных</h3>
-                      <h3 class="h4 mb-0 text-red" th:text="${successRefueled}">Успешно списано</h3>
-                      <h3 class="h4 mb-0 text-red" th:text="${successPurchase}">Успешно добавлено</h3>
-                      <h3 class="h4 mb-0 text-red" th:text="${errorRefueled}">Успешно добавлено</h3>
+                      <h3 class="h4 mb-0 text-red" th:text="${refueledMessage}">Успешно списано</h3>
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
@@ -277,7 +274,7 @@
                           <div class="form-group">
                             <select th:name = "name" class="form-select" id="autoChemistry" required="required">
                               <option>Выберите автохимию</option>
-                              <option th:each="autoChemistry : ${T(carwash.dibo.common.AutoChemistryGoods).values()}"
+                              <option th:each="autoChemistry : ${T(carwash.dibo.common.AutoChemistryGood).values()}"
                                       th:value="${autoChemistry.getName()}"
                                       th:text="${autoChemistry.getName()}">
                               </option>
@@ -293,7 +290,7 @@
                             <div class="col"><hr></div>
                             <select th:name="status" class="form-select" id="process" required="required">
                             <option>Выберите процесс</option>
-                            <option th:each="autoChemistry : ${T(carwash.dibo.common.AutoChemistryStatuses).values()}"
+                            <option th:each="autoChemistry : ${T(carwash.dibo.common.AutoChemistryStatus).values()}"
                                     th:value="${autoChemistry}"
                                     th:text="${autoChemistry.getName()}">
                             </option>

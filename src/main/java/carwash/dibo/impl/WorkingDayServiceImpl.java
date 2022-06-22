@@ -8,6 +8,8 @@ import carwash.dibo.service.WorkingDayService;
 import carwash.dibo.utils.DateConverter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -35,6 +37,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
         log.info("Employee: " + workingDay.getUser().getUsername() + " open work shift at " + LocalDate.now());
     }
 
+    @CacheEvict(value = "workingDaysList", allEntries = true)
     @Override
     public void closeWorkingDay(WorkingDay openDay ,int tenCoins, int diboCoins, int cashOnBox, int nonCash) {
         openDay.setTenCoins(tenCoins);
@@ -47,6 +50,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
         log.info("Employee: " + openDay.getUser().getUsername() + " closed shift at: " + LocalDate.now());
     }
 
+    @CacheEvict(value = "workingDaysList", allEntries = true)
     @Override
     public void save(WorkingDay workingDay) {
         workingDayRepository.save(workingDay);

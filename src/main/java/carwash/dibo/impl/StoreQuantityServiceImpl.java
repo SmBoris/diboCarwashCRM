@@ -1,11 +1,14 @@
 package carwash.dibo.impl;
 
+import carwash.dibo.common.AutoChemistryStatus;
 import carwash.dibo.exception.CantBeNegativeException;
 import carwash.dibo.model.StoreQuantity;
 import carwash.dibo.repository.StoreRepository;
 import carwash.dibo.service.StoreQuantityService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -32,20 +35,38 @@ public class StoreQuantityServiceImpl implements StoreQuantityService {
          storeRepository.save(storeQuantity);
     }
 
+    private void save(StoreQuantity good, int newValue){
+        good.setCurrentQuantity(newValue);
+        save(good);
+        log.info("The " + good.getName() + " quantity are updated");
+    }
+
     @Override
     public void saveByName(String name) {
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "foamAvailable", allEntries = true),
+            @CacheEvict(value="waxAvailable", allEntries = true),
+            @CacheEvict(value = "chemistryList", allEntries = true)})
     @Override
-    public void updateCurrentQuantity(String name, int newValue) throws CantBeNegativeException {
+    public String updateCurrentQuantity(String name, int quantityToChange, AutoChemistryStatus status) throws CantBeNegativeException {
         StoreQuantity goods = findByName(name);
+        int newValue;
+
+        if (isPurchase(status)) {
+            newValue = goods.getCurrentQuantity() + quantityToChange;
+            save(goods, newValue);
+            return name + " успешно добавлено";
+        }
+        else newValue = goods.getCurrentQuantity() - quantityToChange;
 
         if (isPossibleToChange(newValue)) {
-            goods.setCurrentQuantity(newValue);
-            save(goods);
-            log.info("The " + name + " quantity are updated");
+            save(goods, newValue);
+            return name + " успешно списано";
         }
-        else throw new CantBeNegativeException("The quantity cannot be negative");
+
+        else throw new CantBeNegativeException("The quantity for update can't be negative");
     }
 
     @Override
@@ -62,7 +83,9 @@ public class StoreQuantityServiceImpl implements StoreQuantityService {
         log.info("The new auto chemistry storeQuantity with name: " + name + " added to db");
     }
 
-    public boolean isPossibleToChange(int newValue){
+    private boolean isPossibleToChange(int newValue){
         return newValue >= 0;
     }
+
+    private boolean isPurchase(AutoChemistryStatus status){ return status.equals(AutoChemistryStatus.PURCHASE);}
 }
