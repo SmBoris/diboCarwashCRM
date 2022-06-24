@@ -19,7 +19,10 @@ public class Malfunctions {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date openDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date closedDate;
 
     @Convert(converter = MalfunctionsCategoryConverter.class)

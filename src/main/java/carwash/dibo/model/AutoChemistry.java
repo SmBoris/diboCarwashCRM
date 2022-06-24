@@ -16,14 +16,16 @@ public class AutoChemistry {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+
     private String name;
     private int quantityToChange;
 
     @Enumerated
     private AutoChemistryStatus status;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
     private int currentQuantity;
 

@@ -1,21 +1,48 @@
 package carwash.dibo.impl;
 
+import carwash.dibo.bills.UtilityBillsHandler;
+import carwash.dibo.bills.UtilityMeter;
+import carwash.dibo.bills.UtilityMeterType;
 import carwash.dibo.model.UtilityBills;
 import carwash.dibo.repository.UtilityBillsRepository;
 import carwash.dibo.service.UtilityBillsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Month;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class UtilityBillsServiceImpl implements UtilityBillsService {
 
     private final UtilityBillsRepository utilityBillsRepository;
+    private final UtilityBillsHandler utilityBillsHandler;
 
     @Override
     public List<UtilityBills> getLast4Rows() {
         return utilityBillsRepository.findTop4ByOrderByIdDesc();
+    }
+
+    @Override
+    public void save(UtilityMeterType type, Month month, int value, int cost) {
+
+        Optional<UtilityBills> utilityBills = utilityBillsRepository.getByMonthAndYear(month.getValue(), new Date());
+
+        if (!utilityBills.isPresent()){
+
+            UtilityBills bill = utilityBillsHandler.updateValues(new UtilityBills(), type, value, cost);
+
+            bill.setMonth(month);
+            bill.setDateOfAdd(new Date());
+
+            utilityBillsRepository.save(bill);
+
+            return;
+        }
+
+        utilityBillsRepository.save(utilityBillsHandler.updateValues(utilityBills.get(), type, value, cost));
     }
 }

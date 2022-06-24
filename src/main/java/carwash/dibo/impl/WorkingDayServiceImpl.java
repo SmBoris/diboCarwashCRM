@@ -37,7 +37,6 @@ public class WorkingDayServiceImpl implements WorkingDayService {
         log.info("Employee: " + workingDay.getUser().getUsername() + " open work shift at " + LocalDate.now());
     }
 
-    @CacheEvict(value = "workingDaysList", allEntries = true)
     @Override
     public void closeWorkingDay(WorkingDay openDay ,int tenCoins, int diboCoins, int cashOnBox, int nonCash) {
         openDay.setTenCoins(tenCoins);
@@ -50,7 +49,6 @@ public class WorkingDayServiceImpl implements WorkingDayService {
         log.info("Employee: " + openDay.getUser().getUsername() + " closed shift at: " + LocalDate.now());
     }
 
-    @CacheEvict(value = "workingDaysList", allEntries = true)
     @Override
     public void save(WorkingDay workingDay) {
         workingDayRepository.save(workingDay);

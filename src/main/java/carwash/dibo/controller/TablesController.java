@@ -1,5 +1,6 @@
 package carwash.dibo.controller;
 
+import carwash.dibo.bills.UtilityMeter;
 import carwash.dibo.model.AutoChemistry;
 import carwash.dibo.model.UtilityBills;
 import carwash.dibo.service.AutoChemistryService;
@@ -12,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.Month;
 import java.util.List;
 
 @Controller
@@ -38,7 +40,13 @@ public class TablesController {
     }
 
     @PostMapping("/refueled")
-    public String refueled(@ModelAttribute AutoChemistry autoChemistry, RedirectAttributes redirectAttributes){
+    public String refueled(@ModelAttribute AutoChemistry autoChemistry, RedirectAttributes redirectAttributes,
+                           BindingResult bindingResult, Model model){
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("refueledMessage", "Не выбраны параметры");
+            return "redirect:/tables";
+        }
 
         redirectAttributes.addFlashAttribute("autoChemistry", autoChemistry);
 
@@ -54,5 +62,26 @@ public class TablesController {
         model.addAttribute("refueledMessage", message);
 
         return "redirect:/tables";
+    }
+
+    @PostMapping("/utility-bills")
+    public String getUtilityMeterValues(@RequestParam UtilityMeter meter, RedirectAttributes redirectAttributes,
+                                      BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("error", "неверный формат числа");
+            return "redirect:/tables";
+        }
+
+        redirectAttributes.addFlashAttribute("meter", meter);
+
+        return "redirect:/utility-bills/success";
+    }
+
+    @GetMapping("/utility-bills/success")
+    public String setUtilityBill(@RequestParam UtilityMeter meter, Month month, Model model){
+
+        utilityBillsService.save(meter.getType(), month, meter.getValue(), meter.getCost());
+
+        return "tables";
     }
 }

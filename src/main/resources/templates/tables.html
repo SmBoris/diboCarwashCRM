@@ -227,33 +227,33 @@
                       </div>
                       <h3 class="h4 mb-0">Таблица автохимии</h3>
                     </div>
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <thead>
-                            <tr>
-                              <th>Дата</th>
-                              <th>Пользователь</th>
-                              <th>Наименование</th>
-                              <th>Количество</th>
-                              <th>Процесс</th>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table mb-0">
+                            <thead>
+                              <tr>
+                                <th>Дата</th>
+                                <th>Пользователь</th>
+                                <th>Наименование</th>
+                                <th>Количество</th>
+                                <th>Процесс</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="fw-light text-black mb-3" th:each="autoChemistry : ${autoChemistryList}">
+                              <td th:text="${#dates.format(autoChemistry.getDate(), 'dd.MM.yyyy')}">Дата</td>
+                              <td th:text="${autoChemistry.getUser().getUsername()}">Пользователь</td>
+                              <td th:text="${autoChemistry.getName()}">Наименование</td>
+                              <td th:text="${autoChemistry.getQuantityToChange()}">Количество</td>
+                              <td>
+                                <span th:if="${autoChemistry.isPurchase}">Добавлено на склад</span>
+                                <span th:unless="${autoChemistry.isPurchase}">Потрачено</span>
+                              </td>
                             </tr>
-                          </thead>
-                          <tbody>
-                          <tr class="fw-light text-black mb-3" th:each="autoChemistry : ${autoChemistryList}">
-                            <td th:text="${#dates.format(autoChemistry.getDate(), 'dd.MM.yyyy')}">Дата</td>
-                            <td th:text="${autoChemistry.getUser().getUsername()}">Пользователь</td>
-                            <td th:text="${autoChemistry.getName()}">Наименование</td>
-                            <td th:text="${autoChemistry.getQuantityToChange()}">Количество</td>
-                            <td>
-                              <span th:if="${autoChemistry.isPurchase}">Добавлено на склад</span>
-                              <span th:unless="${autoChemistry.isPurchase}">Потрачено</span>
-                            </td>
-                          </tr>
-                          </tbody>
-                        </table>
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
-                    </div>
                   </div>
                 </div>
                 <div class="col-lg-6">
@@ -310,7 +310,7 @@
                           <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
                         </div>
                       </div>
-                      <h3 class="h4 mb-0">Таблица автохимии</h3>
+                      <h3 class="h4 mb-0">Учет энергоресурсов</h3>
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
@@ -355,20 +355,27 @@
                       </div>
                       <h3 class="h4 mb-0">Выберите действие</h3>
                       <h3 class="h4 mb-0 text-red" th:text="${error}">Ошибка ввода данных</h3>
-                      <h3 class="h4 mb-0 text-red" th:text="${successRefueled}">Успешно списано</h3>
-                      <h3 class="h4 mb-0 text-red" th:text="${successPurchase}">Успешно добавлено</h3>
-                      <h3 class="h4 mb-0 text-red" th:text="${errorRefueled}">Успешно добавлено</h3>
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
-                        <form method="post" th:action="@{/refueled}" th:object="${utilityBills}">
+                        <form method="post" th:action="@{/utility-bills}">
+                          <div class="form-group">
+                            <div class="col"><hr></div>
+                            <select th:name="month" class="form-select"  required="required">
+                              <option>Выберите месяц</option>
+                              <option th:each="month : ${T(java.time.Month).values()} "
+                                      th:value="${month}"
+                                      th:text="${month}">
+                            </select>
+                          </div>
+                          <div class="col"><hr></div>
                           <div class="form-group mb-3">
                             <select th:name = "name" class="form-select" id="autoChemical" required="required">
                               <option>Выберите счетчик</option>
-                              <option value="smallWaterMeterValue">Маленький счетчик воды</option>
-                              <option value="bigWaterMeterValue">Большой счетчик воды</option>
-                              <option value="electricalMeterValue">Счетчик электроэнергии</option>
-                              <option value="pear">Pear</option>
+                              <option th:each="meter : ${T(carwash.dibo.bills.UtilityMeterType).values()}"
+                                      th:value="${meter}"
+                                      th:text="${meter.getName()}">
+                              </option>
                             </select>
                           </div>
                           <div class="col"><hr></div>

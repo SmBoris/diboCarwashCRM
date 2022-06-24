@@ -1,15 +1,13 @@
 package carwash.dibo.model;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.Month;
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "utility_bills")
 public class UtilityBills {
 
@@ -17,11 +15,15 @@ public class UtilityBills {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfAdd;
 
-    private float bigWaterMeterValue;
-    private float smallWaterMeterValue;
-    private float electricalMeterValue;
+    @Enumerated
+    private Month month;
+
+    private int bigWaterMeterValue;
+    private int smallWaterMeterValue;
+    private int electricalMeterValue;
 
     private int costByBigWaterMeter;
     private int costBySmallWaterMeter;

@@ -41,7 +41,6 @@ public class DashboardController {
         return weatherService.getCurrentTemperature();
     }
 
-    @Cacheable("workingDaysList")
     @ModelAttribute("oneWeekWorkingList")
     public List<WorkingDay> getWorkingDays() {
         return workingDayService.getLastSevenDays();
@@ -53,18 +52,15 @@ public class DashboardController {
         return storeQuantityService.getCurrentQuantityByName(AutoChemistryGood.ACTIVE_FOAM.getName());
     }
 
-    @Cacheable("malfList")
     @ModelAttribute("malfunctionsList")
     public List<Malfunctions> getAllByOpenByDate(){
         return malfunctionsService.findAllByOpenByDateDesc();
     }
 
-    @Cacheable("waxAvailable")
     @ModelAttribute("storeQuantityWax")
     public int getCurrentQuantityWax(){
         return storeQuantityService.getCurrentQuantityByName(AutoChemistryGood.WAX.getName());
     }
-
 
     @GetMapping("/openDay")
     public String openDay(Model model) {

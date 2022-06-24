@@ -18,6 +18,7 @@ public class AdditionalExpense {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     private ExpensesCategory category;

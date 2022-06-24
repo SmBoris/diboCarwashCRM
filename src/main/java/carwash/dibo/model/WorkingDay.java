@@ -25,7 +25,7 @@ public class WorkingDay {
 
     private boolean open;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 }
 
