@@ -19,9 +19,11 @@ public class MalfunctionsPriorityConverter implements AttributeConverter<Malfunc
 
     @Override
     public MalfunctionsPriority convertToEntityAttribute(String name) {
+
         if (name == null){
             return null;
         }
+
         return Stream.of(MalfunctionsPriority.values())
                 .filter(n -> n.getName().equals(name))
                 .findFirst()

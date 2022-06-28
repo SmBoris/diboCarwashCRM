@@ -10,5 +10,5 @@ public interface UtilityBillsService {
 
     List<UtilityBills> getLast4Rows();
 
-    void save(UtilityMeterType type, Month month, int value, int cost);
+    void save(UtilityMeterType type, int month, int value, int cost);
 }

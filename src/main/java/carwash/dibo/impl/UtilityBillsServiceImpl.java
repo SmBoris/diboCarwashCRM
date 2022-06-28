@@ -8,11 +8,15 @@ import carwash.dibo.repository.UtilityBillsRepository;
 import carwash.dibo.service.UtilityBillsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import sun.util.resources.LocaleData;
 
+import java.text.DateFormat;
 import java.time.Month;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.time.LocalDate;
 
 @Service
 @AllArgsConstructor
@@ -23,13 +27,13 @@ public class UtilityBillsServiceImpl implements UtilityBillsService {
 
     @Override
     public List<UtilityBills> getLast4Rows() {
-        return utilityBillsRepository.findTop4ByOrderByIdDesc();
+        return utilityBillsRepository.findTop7ByOrderByIdDesc();
     }
 
     @Override
-    public void save(UtilityMeterType type, Month month, int value, int cost) {
+    public void save(UtilityMeterType type, int month, int value, int cost) {
 
-        Optional<UtilityBills> utilityBills = utilityBillsRepository.getByMonthAndYear(month.getValue(), new Date());
+        Optional<UtilityBills> utilityBills = utilityBillsRepository.getByMonthAndYear(month);
 
         if (!utilityBills.isPresent()){
 

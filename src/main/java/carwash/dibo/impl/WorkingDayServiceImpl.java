@@ -38,14 +38,17 @@ public class WorkingDayServiceImpl implements WorkingDayService {
     }
 
     @Override
-    public void closeWorkingDay(WorkingDay openDay ,int tenCoins, int diboCoins, int cashOnBox, int nonCash) {
+    public void closeWorkingDay(int tenCoins, int diboCoins, int cashOnBox, int nonCash) {
+        WorkingDay openDay = workingDayRepository.findByOpenTrue().get(0);
         openDay.setTenCoins(tenCoins);
         openDay.setDiboCoins(diboCoins);
         openDay.setCashOnBox(cashOnBox);
         openDay.setNonCash(nonCash);
         openDay.setOpen(false);
         openDay.setCloseDate(new Date());
+
         workingDayRepository.save(openDay);
+
         log.info("Employee: " + openDay.getUser().getUsername() + " closed shift at: " + LocalDate.now());
     }
 
@@ -76,5 +79,10 @@ public class WorkingDayServiceImpl implements WorkingDayService {
     @Override
     public List<WorkingDay> findByOpenTrue() {
         return workingDayRepository.findByOpenTrue();
+    }
+
+    @Override
+    public WorkingDay findTopByOrderByIdDesc() {
+        return workingDayRepository.findTopByOrderByIdDesc();
     }
 }

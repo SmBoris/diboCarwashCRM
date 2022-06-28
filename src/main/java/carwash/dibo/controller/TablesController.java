@@ -5,8 +5,8 @@ import carwash.dibo.model.AutoChemistry;
 import carwash.dibo.model.UtilityBills;
 import carwash.dibo.service.AutoChemistryService;
 import carwash.dibo.service.UtilityBillsService;
+import carwash.dibo.utils.DateConverter;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,16 +27,18 @@ public class TablesController {
         return "tables";
     }
 
-    @Cacheable(value = "chemistryList")
     @ModelAttribute("autoChemistryList")
     public List<AutoChemistry> getAutoChemical() {
         return autoChemistryService.getLast4Rows();
     }
 
-    @Cacheable(value = "billsList")
     @ModelAttribute("utilityBillsList")
     public List<UtilityBills> getUtilityBills() {
         return utilityBillsService.getLast4Rows();
+    }
+
+    @ModelAttribute("rusMonth")
+    public List<String> getRusMonth() { return DateConverter.getRussianMonth();
     }
 
     @PostMapping("/refueled")
@@ -65,23 +67,37 @@ public class TablesController {
     }
 
     @PostMapping("/utility-bills")
-    public String getUtilityMeterValues(@RequestParam UtilityMeter meter, RedirectAttributes redirectAttributes,
-                                      BindingResult bindingResult, Model model){
+    public String getUtilityMeterValues(@ModelAttribute UtilityMeter meter,
+                                        @RequestParam(value = "month") String month,
+                                        RedirectAttributes redirectAttributes,
+                                        BindingResult bindingResult, Model model){
+
         if (bindingResult.hasErrors()){
             model.addAttribute("error", "неверный формат числа");
             return "redirect:/tables";
         }
 
         redirectAttributes.addFlashAttribute("meter", meter);
+        redirectAttributes.addFlashAttribute("month", month);
 
         return "redirect:/utility-bills/success";
     }
 
     @GetMapping("/utility-bills/success")
-    public String setUtilityBill(@RequestParam UtilityMeter meter, Month month, Model model){
+    public String setUtilityBill(Model model){
 
-        utilityBillsService.save(meter.getType(), month, meter.getValue(), meter.getCost());
+        UtilityMeter meter = (UtilityMeter) model.getAttribute("meter");
+        String month = (String) model.getAttribute("month");
 
-        return "tables";
+        assert meter != null;
+        assert month != null;
+
+        utilityBillsService.save(
+                meter.getType(),
+                DateConverter.getMonthIndex(month),
+                meter.getValue(),
+                meter.getCost());
+
+        return "redirect:/tables";
     }
 }

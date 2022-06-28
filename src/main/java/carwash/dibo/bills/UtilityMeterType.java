@@ -8,9 +8,10 @@ import lombok.Getter;
 @Getter
 public enum UtilityMeterType {
 
-    SMALL_WATER_METER("Счетчик холодной воды"),
-    BIG_WATER_METER("Счетчик горячей воды"),
+    SMALL_WATER_METER("Маленький счетчик холодной воды"),
+    BIG_WATER_METER("Большой счетчик холодной воды"),
     ELECTRICAL_METER("Счетчик электричества");
 
-    private final String name;
+    private final String displayValue;
+
 }

@@ -23,8 +23,9 @@ public class UtilityBillsHandler {
             case ELECTRICAL_METER:
                 bills.setElectricalMeterValue(value);
                 bills.setCostByElectricalMeter(cost);
+                return bills;
 
-            default: throw new  IllegalArgumentException("UtilityMeter type error: " + type);
+            default: throw new IllegalArgumentException("Wrong utility bills type: " + type);
         }
     }
 }

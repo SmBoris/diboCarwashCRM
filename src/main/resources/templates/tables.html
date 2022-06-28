@@ -317,8 +317,7 @@
                         <table class="table mb-0">
                           <thead>
                           <tr>
-                            <th>Дата</th>
-                            <th>Пользователь</th>
+                            <th>Месяц</th>
                             <th>Вода М</th>
                             <th>Цена</th>
                             <th>Вода Б</th>
@@ -329,8 +328,7 @@
                           </thead>
                           <tbody>
                           <tr class="fw-light text-black mb-3" th:each="utililtyBill : ${utilityBillsList}">
-                            <td th:text="${#dates.format(utililtyBill.getDateOfAdd(), 'dd.MM.yyyy')}">Дата</td>
-                            <td th:text="${utililtyBill.getUser().getUsername()}">Пользователь</td>
+                            <td th:text="${utililtyBill.getRussianMonthName(utililtyBill.getMonth())}">Дата</td>
                             <td th:text="${utililtyBill.getSmallWaterMeterValue()}">Наименование</td>
                             <td th:text="${utililtyBill.getCostBySmallWaterMeter()}">Количество</td>
                             <td th:text="${utililtyBill.getBigWaterMeterValue()}">Количество</td>
@@ -363,28 +361,26 @@
                             <div class="col"><hr></div>
                             <select th:name="month" class="form-select"  required="required">
                               <option>Выберите месяц</option>
-                              <option th:each="month : ${T(java.time.Month).values()} "
+                              <option th:each="month : ${rusMonth} "
                                       th:value="${month}"
                                       th:text="${month}">
                             </select>
-                          </div>
+                            </div>
                           <div class="col"><hr></div>
-                          <div class="form-group mb-3">
-                            <select th:name = "name" class="form-select" id="autoChemical" required="required">
+                            <select th:name = "type" class="form-select" id="utilityMeter" required="required">
                               <option>Выберите счетчик</option>
                               <option th:each="meter : ${T(carwash.dibo.bills.UtilityMeterType).values()}"
                                       th:value="${meter}"
-                                      th:text="${meter.getName()}">
+                                      th:text="${meter.getDisplayValue()}">
                               </option>
                             </select>
+                          <div class="col"><hr></div>
+                          <div class="form-group">
+                              <input class="form-control" th:name="value" id="value" type="number" required placeholder="Введите показания...">
                           </div>
                           <div class="col"><hr></div>
                           <div class="form-group">
-                              <input class="form-control" th:name="value" id="value" type="text" placeholder="Введите показания...">
-                          </div>
-                          <div class="col"><hr></div>
-                          <div class="form-group">
-                              <input class="form-control" th:name="cost" id="cost" type="text" placeholder="Введите стоимость...">
+                              <input class="form-control" th:name="cost" id="cost" type="number" required placeholder="Введите стоимость...">
                           </div>
                           <div class="col"><hr></div>
                           <button class="btn btn-primary mt-3" type="submit">Подтвердить</button>

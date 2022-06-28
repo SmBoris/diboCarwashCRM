@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 @Converter
 public class MalfunctionsCategoryConverter implements AttributeConverter<MalfunctionsCategory, String> {
+
     @Override
     public String convertToDatabaseColumn(MalfunctionsCategory malfunctionsCategory) {
         if (malfunctionsCategory == null){
@@ -18,9 +19,11 @@ public class MalfunctionsCategoryConverter implements AttributeConverter<Malfunc
 
     @Override
     public MalfunctionsCategory convertToEntityAttribute(String name) {
+
         if (name == null) {
             return null;
         }
+
         return Stream.of(MalfunctionsCategory.values())
                 .filter(n -> n.getName().equals(name))
                 .findFirst()

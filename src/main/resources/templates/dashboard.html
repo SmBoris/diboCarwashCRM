@@ -248,7 +248,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="workingDay : ${oneWeekWorkingList}" th:style="${workingDay.isOpen()}? 'background: #A52A2A;'">
+                                            <tr th:each="workingDay : ${oneWeekWorkingList}" th:style="${workingDay.isOpen()}? 'background: #ADFF2F;'">
                                                 <td th:text="${#dates.format(workingDay.getOpenDate(), 'dd.MM.yyyy')}">Дата</td>
                                                 <td th:text="${workingDay.getCashOnBox()}">Наличные</td>
                                                 <td th:text="${workingDay.getTenCoins()}">Монеты 10 руб</td>
@@ -270,31 +270,29 @@
                             <div class="card mb-3 text-center">
                                 <div class="card-body">
                                     <a th:href="@{/openDay}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Открыть смену</a>
-                                    <small class="h2 mb-0 d-block text-red" th:text="${errorOpenDay}"></small>
-                                    <small class="h2 mb-0 d-block text-red" th:text="${errorOpenDoubleDay}"></small>
                                 </div>
                             </div>
                             <div class="card mb-0 text-center">
                                 <div class="card-body">
-                                    <small class="h2 mb-0 d-block text-green" th:text="${dayClosed}"></small>
+                                    <small class="h2 mb-0 d-block text-green" th:text="${success}"></small>
                                     <small class="h2 mb-0 d-block text-red" th:text="${error}"></small>
 
                                         <form action="#" th:action="@{/closeDay}" method="post">
                                             <div>
                                                 <label for="cash-on-box"></label>
-                                                <input class="form-control" th:name="cashOnBox" id="cash-on-box" type="text" placeholder="Наличные в кассе">
+                                                <input class="form-control" th:name="cashOnBox" id="cash-on-box" type="number" required placeholder="Наличные в кассе">
                                             </div>
                                             <div>
                                                 <label for="ten-coins"></label>
-                                                <input class="form-control" th:name="tenCoins" id="ten-coins" type="text" placeholder="10 рублевые монеты">
+                                                <input class="form-control" th:name="tenCoins" id="ten-coins" type="number" required placeholder="10 рублевые монеты">
                                             </div>
                                             <div>
                                                 <label for="non-cash"></label>
-                                                <input class="form-control" th:name="cashBill" id="non-cash" type="text" placeholder="Безналичные">
+                                                <input class="form-control" th:name="nonCash" id="non-cash" type="number" required placeholder="Безналичные">
                                             </div>
                                             <div>
                                                 <label for="dibo-coins"></label>
-                                                <input class="form-control" th:name="diboCoins" id="dibo-coins" type="text" placeholder="Жетоны Dibo">
+                                                <input class="form-control" th:name="diboCoins" id="dibo-coins" type="number" required placeholder="Жетоны Dibo">
                                             </div>
                                             <button type="submit" class="btn btn-info active mb-0 mt-2" role="button" aria-pressed="true">Закрыть смену</button>
                                         </form>

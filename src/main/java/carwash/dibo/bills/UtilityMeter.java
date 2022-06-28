@@ -3,10 +3,13 @@ package carwash.dibo.bills;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Enumerated;
+
 @Data
 @Component
 public class UtilityMeter {
 
+    @Enumerated
     UtilityMeterType type;
 
     private int value;

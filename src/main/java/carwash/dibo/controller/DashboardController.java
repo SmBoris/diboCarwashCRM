@@ -1,22 +1,18 @@
 package carwash.dibo.controller;
 
-import carwash.dibo.integration.NatureliaOrderService;
 import carwash.dibo.integration.WeatherService;
-import carwash.dibo.validator.DashboardValidator;
 import carwash.dibo.common.AutoChemistryGood;
 import carwash.dibo.model.Malfunctions;
 import carwash.dibo.model.WorkingDay;
 import carwash.dibo.service.*;
+import carwash.dibo.validator.WorkingDayValidator;
 import lombok.AllArgsConstructor;
 import org.json.JSONException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,12 +20,12 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class DashboardController {
+
     private final StoreQuantityService storeQuantityService;
     private final WorkingDayService workingDayService;
-    private final DashboardValidator dashboardValidator;
     private final MalfunctionsService malfunctionsService;
     private final WeatherService weatherService;
-    private final NatureliaOrderService natureliaOrderService;
+    private final WorkingDayValidator workingDayValidator;
 
     @GetMapping("/dashboard")
     public String dashboardPage(){
@@ -46,7 +42,6 @@ public class DashboardController {
         return workingDayService.getLastSevenDays();
     }
 
-    @Cacheable("foamAvailable")
     @ModelAttribute("storeQuantityFoam")
     public int getCurrentQuantityFoam(){
         return storeQuantityService.getCurrentQuantityByName(AutoChemistryGood.ACTIVE_FOAM.getName());
@@ -65,12 +60,9 @@ public class DashboardController {
     @GetMapping("/openDay")
     public String openDay(Model model) {
 
-        if (!workingDayService.firstTimeOpenToday()){
-            model.addAttribute("errorOpenDay", "Сегодня смена уже открыта");
-            return "dashboard";
-        }
-        if (workingDayService.findByOpenTrue().size() > 0){
-            model.addAttribute("errorOpenDoubleDay", "Закройте предыдущую смену");
+        String error = workingDayValidator.openCloseShiftValidate();
+        if (!error.isEmpty()){
+            model.addAttribute("error", error);
             return "dashboard";
         }
 
@@ -80,38 +72,18 @@ public class DashboardController {
     }
 
     @PostMapping("/closeDay")
-    public String closeDay(@RequestParam(value = "tenCoins", required = false) String tenCoins,
-                           @RequestParam (value = "diboCoins", required = false) String diboCoins,
-                           @RequestParam (value = "cashOnBox", required = false) String cashOnBox,
-                           @RequestParam (value = "cashBill", required = false) String cashBillAcceptor,
-                           Model model){
+    public String closeDay(@ModelAttribute WorkingDay day, Model model, BindingResult bindingResult){
 
-        String errorMessage = dashboardValidator.getFieldsValidate(tenCoins, diboCoins, cashOnBox);
-        if (!errorMessage.isEmpty()) {
-            model.addAttribute("error", errorMessage);
+        String error = workingDayValidator.openCloseShiftValidate();
+        if (!error.isEmpty()) {
+            model.addAttribute("error", error);
             return "dashboard";
         }
 
-        DashboardValidator validated = dashboardValidator.fieldsTypeValidate(tenCoins, diboCoins, cashOnBox, cashBillAcceptor);
-        if (!validated.getErrorMessage().isEmpty()){
-            model.addAttribute("error", validated.getErrorMessage());
-            return "dashboard";
-        }
+        workingDayService.closeWorkingDay(day.getTenCoins(), day.getDiboCoins(),
+                day.getCashOnBox(), day.getNonCash());
 
-        List<WorkingDay> openDayList = workingDayService.findByOpenTrue();
-        if (openDayList.isEmpty()) {
-            model.addAttribute("error", "Смена еще не открыта");
-            return "dashboard";
-        }
-        if (openDayList.size() > 1) {
-            throw new RuntimeException("Can't be open more the one working day");
-        }
-
-        WorkingDay openDay = openDayList.get(0);
-        workingDayService.closeWorkingDay(openDay, validated.getTenCoins(), validated.getDiboCoins(),
-                validated.getCashOnBox(), validated.getCashBillAcceptor());
-
-        model.addAttribute("dayClosed", "Смена успешно закрыта");
+        model.addAttribute("success", "Смена успешно закрыта");
 
         return "dashboard";
     }
@@ -121,7 +93,7 @@ public class DashboardController {
         model.addAttribute("malfunctions", malfunctions);
 
         if (result.hasErrors()){
-            model.addAttribute("errorField", "Неверные параметры");
+            model.addAttribute("error", "Неверные параметры");
             return "dashboard";
         }
 
