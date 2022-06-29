@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum ExpensesCategory {
+public enum ExpenseCategory {
 
     SPARE_PARTS("Запчасти"),
     HOUSEHOLD_GOODS("Хоз товары"),
