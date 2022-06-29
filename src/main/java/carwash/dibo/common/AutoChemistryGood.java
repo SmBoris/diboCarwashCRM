@@ -6,6 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum AutoChemistryGood {
+
     ACTIVE_FOAM("Активная Пена"),
     WAX("Воск"),
     PRESSURE_WASH_FOAM("Предварительная мойка");

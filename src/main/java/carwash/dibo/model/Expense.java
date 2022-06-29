@@ -1,6 +1,6 @@
 package carwash.dibo.model;
 
-import carwash.dibo.common.ExpensesCategory;
+import carwash.dibo.common.ExpenseCategory;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 @Setter
 @Table(name = "additional_expense")
 
-public class AdditionalExpense {
+public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,7 +21,8 @@ public class AdditionalExpense {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    private ExpensesCategory category;
+    @Enumerated
+    private ExpenseCategory category;
 
     private String description;
 

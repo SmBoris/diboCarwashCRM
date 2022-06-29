@@ -15,6 +15,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class WorkingDayValidator {
+
     private final WorkingDayService workingDayService;
 
     public String openCloseShiftValidate(){

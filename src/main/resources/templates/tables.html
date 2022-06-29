@@ -225,6 +225,87 @@
                           <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
                         </div>
                       </div>
+                      <h3 class="h4 mb-0">Таблица расходов</h3>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table mb-0">
+                          <thead>
+                          <tr>
+                            <th>Дата</th>
+                            <th>Пользователь</th>
+                            <th>Категория</th>
+                            <th>Описание</th>
+                            <th>Стоимость</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr class="fw-light text-black mb-3" th:each="expense : ${expenses}">
+                            <td th:text="${#dates.format(expense.getDate(), 'dd.MM.yyyy')}">Дата</td>
+                            <td sec:authentication="name">Пользователь</td>
+                            <td th:text="${expense.getCategory().getName()}">Категория</td>
+                            <td th:text="${expense.getDescription()}">Описание</td>
+                            <td th:text="${expense.getCost()}">Стоимость</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="card mb-0">
+                    <div class="card-header">
+                      <div class="card-close">
+                        <div class="dropdown">
+                          <button class="dropdown-toggle text-sm" type="button" id="closeCard1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                          <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
+                        </div>
+                      </div>
+                      <h3 class="h4 mb-0">Выберите действие</h3>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <form method="post" th:action="@{/additional-expense}">
+                          <div class="form-group">
+                            <select th:name = "name" class="form-select" id="expense" required="required">
+                              <option>Выберите категорию</option>
+                              <option th:each="category : ${T(carwash.dibo.common.ExpenseCategory).values()}"
+                                      th:value="${category}"
+                                      th:text="${category.getName()}">
+                              </option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <div class="col"><hr></div>
+                            <select th:name="quantityToChange" class="form-select"  id="dips" required="required">
+                              <option>Выберите количество</option>
+                              <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}">
+                            </select>
+                          </div>
+                          <div class="col"><hr></div>
+                          <select th:name="status" class="form-select" id="process" required="required">
+                            <option>Выберите процесс</option>
+                            <option th:each="autoChemistry : ${T(carwash.dibo.common.AutoChemistryStatus).values()}"
+                                    th:value="${autoChemistry}"
+                                    th:text="${autoChemistry.getName()}">
+                            </option>
+                          </select>
+                          <button class="btn btn-primary mt-3" type="submit">Подтвердить</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="card mb-0">
+                    <div class="card-header">
+                      <div class="card-close">
+                        <div class="dropdown">
+                          <button class="dropdown-toggle text-sm" type="button" id="closeCard1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                          <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
+                        </div>
+                      </div>
                       <h3 class="h4 mb-0">Таблица автохимии</h3>
                     </div>
                       <div class="card-body">

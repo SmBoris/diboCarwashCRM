@@ -14,6 +14,7 @@ import java.util.Date;
 @Setter
 @Table(name = "malfunctions")
 public class Malfunctions {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;

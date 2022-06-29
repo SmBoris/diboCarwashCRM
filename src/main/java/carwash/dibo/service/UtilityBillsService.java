@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UtilityBillsService {
 
-    List<UtilityBills> getLast4Rows();
+    List<UtilityBills> getLast7Rows();
 
     void save(UtilityMeterType type, int month, int value, int cost);
 }

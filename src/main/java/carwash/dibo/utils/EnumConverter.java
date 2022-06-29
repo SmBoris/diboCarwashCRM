@@ -1,11 +1,12 @@
 package carwash.dibo.utils;
 
-import carwash.dibo.common.MalfunctionsCategory;
-
 import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 import java.util.stream.Stream;
 
+@Converter
 public abstract class EnumConverter<T extends Enum<T> & PersistableEnum<E>, E> implements AttributeConverter<T, E> {
+
     private final Class<T> clazz;
 
     public EnumConverter(Class<T> clazz) {

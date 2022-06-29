@@ -6,6 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum BasicDailyDuties {
+
     CLEANING_OF_THE_TERRITORY("Уборка территории"),
     CHECKING_OF_CHEMICAL_VOLUME("Проверка химии"),
     CASH_REGISTER("Кассовый аппарат"),

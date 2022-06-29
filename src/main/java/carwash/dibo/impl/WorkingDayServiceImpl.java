@@ -22,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class WorkingDayServiceImpl implements WorkingDayService {
+
     private final WorkingDayRepository workingDayRepository;
     private final UserService userService;
 

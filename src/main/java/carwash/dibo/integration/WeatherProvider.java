@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Component
 @Slf4j
 public class WeatherProvider {
+
     private static long lastCallTime = -1;
     private static final long DELAY_BETWEEN_CALLS = 120;
     private static final String LATITUDE = "59.97837376751";

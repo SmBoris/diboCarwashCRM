@@ -1,8 +1,10 @@
 package carwash.dibo.controller;
 
 import carwash.dibo.bills.UtilityMeter;
+import carwash.dibo.model.Expense;
 import carwash.dibo.model.AutoChemistry;
 import carwash.dibo.model.UtilityBills;
+import carwash.dibo.service.ExpenseService;
 import carwash.dibo.service.AutoChemistryService;
 import carwash.dibo.service.UtilityBillsService;
 import carwash.dibo.utils.DateConverter;
@@ -13,7 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.Month;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -21,6 +23,7 @@ import java.util.List;
 public class TablesController {
     private final AutoChemistryService autoChemistryService;
     private final UtilityBillsService utilityBillsService;
+    private final ExpenseService additionalExpenseService;
 
     @GetMapping("/tables")
     public String getTables(){
@@ -28,17 +31,23 @@ public class TablesController {
     }
 
     @ModelAttribute("autoChemistryList")
-    public List<AutoChemistry> getAutoChemical() {
+    public List<AutoChemistry> getAutoChemical4Rows() {
         return autoChemistryService.getLast4Rows();
     }
 
     @ModelAttribute("utilityBillsList")
     public List<UtilityBills> getUtilityBills() {
-        return utilityBillsService.getLast4Rows();
+        return utilityBillsService.getLast7Rows();
     }
 
     @ModelAttribute("rusMonth")
     public List<String> getRusMonth() { return DateConverter.getRussianMonth();
+    }
+
+    @ModelAttribute("expenses")
+    public List<Expense> getAdditionalExpenses() {
+        return additionalExpenseService.getLast5Rows();
+
     }
 
     @PostMapping("/refueled")
@@ -97,6 +106,13 @@ public class TablesController {
                 DateConverter.getMonthIndex(month),
                 meter.getValue(),
                 meter.getCost());
+
+        return "redirect:/tables";
+    }
+
+    @PostMapping("/additional-expense")
+    public String addExpense(@ModelAttribute Expense expense){
+        expense.setDate(new Date());
 
         return "redirect:/tables";
     }

@@ -26,7 +26,7 @@ public class UtilityBillsServiceImpl implements UtilityBillsService {
     private final UtilityBillsHandler utilityBillsHandler;
 
     @Override
-    public List<UtilityBills> getLast4Rows() {
+    public List<UtilityBills> getLast7Rows() {
         return utilityBillsRepository.findTop7ByOrderByIdDesc();
     }
 

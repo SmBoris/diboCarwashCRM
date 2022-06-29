@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @AllArgsConstructor
 public class UserController {
+
     private final SecurityService securityService;
     private final UserValidator userValidator;
     private final UserService userService;

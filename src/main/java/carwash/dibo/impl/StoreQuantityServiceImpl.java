@@ -18,6 +18,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class StoreQuantityServiceImpl implements StoreQuantityService {
+
     StoreRepository storeRepository;
 
     @Override

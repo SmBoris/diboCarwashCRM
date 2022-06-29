@@ -1,6 +1,6 @@
 package carwash.dibo.impl;
 
-import carwash.dibo.model.AdditionalExpense;
+import carwash.dibo.model.Expense;
 import carwash.dibo.repository.ExpenseRepository;
 import carwash.dibo.service.ExpenseService;
 import lombok.AllArgsConstructor;
@@ -15,12 +15,12 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final ExpenseRepository additionalExpenseRepository;
 
     @Override
-    public void save(AdditionalExpense expense) {
+    public void save(Expense expense) {
         additionalExpenseRepository.save(expense);
     }
 
     @Override
-    public List<AdditionalExpense> getLast5Rows() {
+    public List<Expense> getLast5Rows() {
         return additionalExpenseRepository.findTop5ByOrderByIdDesc();
     }
 }

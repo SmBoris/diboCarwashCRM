@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "store_quantity")
 public class StoreQuantity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;

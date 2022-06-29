@@ -11,6 +11,7 @@ import java.util.Date;
 @Setter
 @Table(name = "working_day")
 public class WorkingDay {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;

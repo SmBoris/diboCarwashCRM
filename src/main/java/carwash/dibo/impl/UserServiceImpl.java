@@ -22,6 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
+
     public final UserRepository userRepository;
     public final RoleRepository roleRepository;
     public final BCryptPasswordEncoder bCryptPasswordEncoder;

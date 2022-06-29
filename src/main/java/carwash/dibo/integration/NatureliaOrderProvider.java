@@ -16,6 +16,7 @@ import java.util.Map;
 @Component
 @Slf4j
 public class NatureliaOrderProvider implements NatureliaOrderService {
+
     private final static String DEFAULT_AUTH_LINK = "https://naturelia.net/login/";
     private final static String AUTH_LINK_CHECKER = "https://naturelia.net/account/";
     private final static String RE_ORDER_LINK = "https://naturelia.net/index.php?route=account/order/reorderall&";

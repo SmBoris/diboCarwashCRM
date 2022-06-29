@@ -12,6 +12,7 @@ import java.util.Date;
 @Setter
 @Table(name = "auto_chemistry")
 public class AutoChemistry {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;

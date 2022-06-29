@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface AutoChemistryRepository extends JpaRepository<AutoChemistry, Long> {
-    AutoChemistry findByName(String name);
 
     @Query(value = "SELECT a FROM AutoChemistry a ORDER BY a.id DESC")
     List<AutoChemistry> getAutoChemicalByDesc();

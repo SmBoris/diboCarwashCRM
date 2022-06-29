@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface MalfunctionsRepository extends JpaRepository<Malfunctions, Long> {
+
     List<Malfunctions> findAll();
 
     @Query("SELECT m FROM Malfunctions m WHERE m.isResolved = FALSE")

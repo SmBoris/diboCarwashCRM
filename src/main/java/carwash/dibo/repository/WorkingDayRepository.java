@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface WorkingDayRepository extends JpaRepository<WorkingDay, Long> {
+
     List<WorkingDay> findAll();
     List<WorkingDay> findByOpenTrue();
 

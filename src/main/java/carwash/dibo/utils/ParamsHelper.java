@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ParamsHelper {
+
     public static String httpBuildQuery(Map<String, Object> params, String encoding) {
+
         if (isEmpty(encoding)) {
             encoding = "UTF-8";
         }

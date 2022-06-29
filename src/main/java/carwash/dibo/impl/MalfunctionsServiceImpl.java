@@ -47,7 +47,6 @@ public class MalfunctionsServiceImpl implements MalfunctionsService {
         return malfunctions;
     }
 
-    @CacheEvict(value = "malfList", allEntries = true)
     @Override
     public void addMalfunction(Malfunctions malfunctions) {
         malfunctions.setOpenDate(new Date());
