@@ -2,8 +2,7 @@ package carwash.dibo.model;
 
 import carwash.dibo.common.MalfunctionsCategory;
 import carwash.dibo.common.MalfunctionsPriority;
-import carwash.dibo.utils.MalfunctionsCategoryConverter;
-import carwash.dibo.utils.MalfunctionsPriorityConverter;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,10 +24,10 @@ public class Malfunctions {
     @Temporal(TemporalType.TIMESTAMP)
     private Date closedDate;
 
-    @Convert(converter = MalfunctionsCategoryConverter.class)
+    @Convert(converter = MalfunctionsCategory.Converter.class)
     private MalfunctionsCategory category;
 
-    @Convert(converter = MalfunctionsPriorityConverter.class)
+    @Convert(converter = MalfunctionsPriority.Converter.class)
     private MalfunctionsPriority priority;
 
     private String description;
