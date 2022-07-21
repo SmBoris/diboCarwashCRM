@@ -1,6 +1,5 @@
-package carwash.dibo.integration;
+package carwash.dibo.integration.weather;
 
-import carwash.dibo.common.Weather;
 import carwash.dibo.utils.Downloader;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -43,7 +42,7 @@ public class WeatherProvider {
         return new JSONObject(text);
     }
 
-    public static Weather currentWeather() {
+    public Weather getCurrentWeather() {
         try {
             JSONObject obj = callApiMethod();
             JSONObject main = obj.getJSONObject("main");

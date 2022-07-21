@@ -1,4 +1,4 @@
-package carwash.dibo.common;
+package carwash.dibo.integration.weather;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,8 +11,7 @@ public class Weather {
 
     private double weatherTemperature;
     private String weatherCondition;
-    private Double windSpeed;
-    private List<Weather> weathers;
+    private double windSpeed;
 
     public Weather(Double weatherTemperature, String weatherCondition, Double windSpeed) {
         this.weatherTemperature = weatherTemperature;
