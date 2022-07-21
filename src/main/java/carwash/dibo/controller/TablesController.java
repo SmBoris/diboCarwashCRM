@@ -23,7 +23,7 @@ import java.util.List;
 public class TablesController {
     private final AutoChemistryService autoChemistryService;
     private final UtilityBillsService utilityBillsService;
-    private final ExpenseService additionalExpenseService;
+    private final ExpenseService expenseService;
 
     @GetMapping("/tables")
     public String getTables(){
@@ -46,7 +46,7 @@ public class TablesController {
 
     @ModelAttribute("expenses")
     public List<Expense> getAdditionalExpenses() {
-        return additionalExpenseService.getLast5Rows();
+        return expenseService.getLast5Rows();
 
     }
 
@@ -67,8 +67,7 @@ public class TablesController {
     @GetMapping("/refueled/success")
     public String redirectedRefueled(@ModelAttribute AutoChemistry autoChemistry, Model model) {
 
-        String message = autoChemistryService
-                .refueled(autoChemistry.getName(), autoChemistry.getQuantityToChange(), autoChemistry.getStatus());
+        String message = autoChemistryService.refueled(autoChemistry);
 
         model.addAttribute("refueledMessage", message);
 
@@ -112,7 +111,9 @@ public class TablesController {
 
     @PostMapping("/additional-expense")
     public String addExpense(@ModelAttribute Expense expense){
+
         expense.setDate(new Date());
+        expenseService.save(expense);
 
         return "redirect:/tables";
     }
