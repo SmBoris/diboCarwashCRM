@@ -27,112 +27,7 @@
   <body>
     <div class="page">
       <!-- Main Navbar-->
-      <header class="header z-index-50">
-        <nav class="navbar py-3 px-0 shadow-sm text-white position-relative">
-          <!-- Search Box-->
-          <div class="search-box shadow-sm">
-            <button class="dismiss d-flex align-items-center">
-              <svg class="svg-icon svg-icon-heavy">
-                <use xlink:href="#close-1"> </use>
-              </svg>
-            </button>
-            <form id="searchForm" action="#" role="search">
-              <input class="form-control shadow-0" type="text" placeholder="What are you looking for...">
-            </form>
-          </div>
-          <div class="container-fluid w-100">
-            <div class="navbar-holder d-flex align-items-center justify-content-between w-100">
-              <!-- Navbar Header-->
-              <div class="navbar-header">
-                <!-- Navbar Brand --><a class="navbar-brand d-none d-sm-inline-block" th:href="@{/dashboard}">
-                  <div class="brand-text d-none d-lg-inline-block"><span>Dibo</span><strong>Dashboard</strong></div>
-                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>Dibo</strong></div></a>
-                <!-- Toggle Button--><a class="menu-btn active" id="toggle-btn" href="#"><span></span><span></span><span></span></a>
-              </div>
-              <!-- Navbar Menu -->
-              <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-                <!-- Search-->
-                <li class="nav-item d-flex align-items-center"><a id="search" href="#">
-                    <svg class="svg-icon svg-icon-xs svg-icon-heavy">
-                      <use xlink:href="#find-1"> </use>
-                    </svg></a></li>
-                <!-- Notifications-->
-                <li class="nav-item dropdown"> <a class="nav-link text-white" id="notifications" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg class="svg-icon svg-icon-xs svg-icon-heavy">
-                      <use xlink:href="#chart-1"> </use>
-                    </svg><span class="badge bg-red badge-corner fw-normal">12</span></a>
-                  <ul class="dropdown-menu dropdown-menu-end mt-3 shadow-sm" aria-labelledby="notifications">
-                    <li><a class="dropdown-item py-3" href="#"> 
-                        <div class="d-flex">
-                          <div class="icon icon-sm bg-blue">
-                            <svg class="svg-icon svg-icon-xs svg-icon-heavy">
-                              <use xlink:href="#envelope-1"> </use>
-                            </svg>
-                          </div>
-                          <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-xs text-gray-600">You have 6 new messages </span><small class="small text-gray-600">4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a class="dropdown-item py-3" href="#"> 
-                        <div class="d-flex">
-                          <div class="icon icon-sm bg-green">
-                            <svg class="svg-icon svg-icon-xs svg-icon-heavy">
-                              <use xlink:href="#chats-1"> </use>
-                            </svg>
-                          </div>
-                          <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-xs text-gray-600">New 2 WhatsApp messages</span><small class="small text-gray-600">4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a class="dropdown-item py-3" href="#"> 
-                        <div class="d-flex">
-                          <div class="icon icon-sm bg-orange">
-                            <svg class="svg-icon svg-icon-xs svg-icon-heavy">
-                              <use xlink:href="#checked-window-1"> </use>
-                            </svg>
-                          </div>
-                          <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-xs text-gray-600">Server Rebooted</span><small class="small text-gray-600">8 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a class="dropdown-item py-3" href="#"> 
-                        <div class="d-flex">
-                          <div class="icon icon-sm bg-green">
-                            <svg class="svg-icon svg-icon-xs svg-icon-heavy">
-                              <use xlink:href="#chats-1"> </use>
-                            </svg>
-                          </div>
-                          <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-xs text-gray-600">New 2 WhatsApp messages</span><small class="small text-gray-600">10 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a class="dropdown-item all-notifications text-center" href="#"> <strong class="text-xs text-gray-600">view all notifications                                            </strong></a></li>
-                  </ul>
-                </li>
-                <!-- Messages                        -->
-                <li class="nav-item dropdown"> <a class="nav-link text-white" id="messages" rel="nofollow" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg class="svg-icon svg-icon-xs svg-icon-heavy">
-                      <use xlink:href="#envelope-1"> </use>
-                    </svg><span class="badge bg-orange badge-corner fw-normal">10</span></a>
-                  <ul class="dropdown-menu dropdown-menu-end mt-3 shadow-sm" aria-labelledby="messages">
-                    <li><a class="dropdown-item d-flex py-3" href="#"> <img class="img-fluid rounded-circle" src="img/avatar-1.jpg" alt="..." width="45">
-                        <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-sm text-gray-600">Jason Doe</span><small class="small text-gray-600"> Sent You Message</small></div></a></li>
-                    <li><a class="dropdown-item d-flex py-3" href="#"> <img class="img-fluid rounded-circle" src="img/avatar-2.jpg" alt="..." width="45">
-                        <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-sm text-gray-600">Jason Doe</span><small class="small text-gray-600"> Sent You Message</small></div></a></li>
-                    <li><a class="dropdown-item d-flex py-3" href="#"> <img class="img-fluid rounded-circle" src="img/avatar-3.jpg" alt="..." width="45">
-                        <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-sm text-gray-600">Jason Doe</span><small class="small text-gray-600"> Sent You Message</small></div></a></li>
-                    <li><a class="dropdown-item text-center" href="#"> <strong class="text-xs text-gray-600">Read all messages   </strong></a></li>
-                  </ul>
-                </li>
-                <!-- Languages dropdown    -->
-                <li class="nav-item dropdown"><a class="nav-link text-white dropdown-toggle d-flex align-items-center" id="languages" href="#" data-bs-toggle="dropdown" aria-expanded="false"><img class="me-2" src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
-                  <ul class="dropdown-menu dropdown-menu-end mt-3 shadow-sm" aria-labelledby="languages">
-                    <li><a class="dropdown-item" rel="nofollow" href="#"> <img class="me-2" src="img/flags/16/DE.png" alt="English"><span class="text-xs text-gray-700">German</span></a></li>
-                    <li><a class="dropdown-item" rel="nofollow" href="#"> <img class="me-2" src="img/flags/16/FR.png" alt="English"><span class="text-xs text-gray-700">French                                         </span></a></li>
-                  </ul>
-                </li>
-                <!-- Logout    -->
-                <li class="nav-item"><a class="nav-link text-white" href="login.html"> <span class="d-none d-sm-inline">Выйти</span>
-                    <svg class="svg-icon svg-icon-xs svg-icon-heavy">
-                      <use xlink:href="#security-1"> </use>
-                    </svg></a></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </header>
+      <div th:replace="header :: header"></div>
       <div class="page-content d-flex align-items-stretch"> 
         <!-- Side Navbar -->
         <nav class="side-navbar z-index-40">
@@ -143,63 +38,28 @@
               <p class="text-sm text-gray-500 fw-light mb-0 lh-1">General Manager</p>
             </div>
           </div>
-          <!-- Sidebar Navidation Menus--><span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Main</span>
+          <!-- Sidebar Navidation Menus--><span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Главная старница</span>
           <ul class="list-unstyled py-4">
             <li class="sidebar-item"><a class="sidebar-link" th:href="@{/dashboard}">
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#real-estate-1"> </use>
-                </svg>Главная страница</a></li>
+              <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
+                <use xlink:href="#real-estate-1"> </use>
+              </svg>Таблицы расходов</a></li>
             <li class="sidebar-item active"><a class="sidebar-link" th:href="@{/tables}">
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#portfolio-grid-1"> </use>
-                </svg>Таблица расходов</a></li>
-            <li class="sidebar-item"><a class="sidebar-link" href="charts.html"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#sales-up-1"> </use>
-                </svg>Charts </a></li>
-            <li class="sidebar-item"><a class="sidebar-link" href="forms.html"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#survey-1"> </use>
-                </svg>Forms </a></li>
-            <li class="sidebar-item"><a class="sidebar-link" href="#exampledropdownDropdown" data-bs-toggle="collapse"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#browser-window-1"> </use>
-                </svg>Example dropdown </a>
-              <ul class="collapse list-unstyled " id="exampledropdownDropdown">
-                <li><a class="sidebar-link" href="#">Page</a></li>
-                <li><a class="sidebar-link" href="#">Page</a></li>
-                <li><a class="sidebar-link" href="#">Page</a></li>
-              </ul>
+              <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
+                <use xlink:href="#portfolio-grid-1"> </use>
+              </svg>Таблица расходов</a></li>
             </li>
-            <li class="sidebar-item"><a class="sidebar-link" href="login.html"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#disable-1"> </use>
-                </svg>Страница входа</a></li>
-          </ul><span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Extras</span>
-          <ul class="list-unstyled py-4">
-            <li class="sidebar-item"> <a class="sidebar-link" href="#"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#imac-screen-1"> </use>
-                </svg>Demo </a></li>
-            <li class="sidebar-item"> <a class="sidebar-link" href="#"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#chart-1"> </use>
-                </svg>Demo </a></li>
-            <li class="sidebar-item"> <a class="sidebar-link" href="#"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#quality-1"> </use>
-                </svg>Demo </a></li>
-            <li class="sidebar-item"> <a class="sidebar-link" href="#"> 
-                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                  <use xlink:href="#security-shield-1"> </use>
-                </svg>Demo </a></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="login.html">
+              <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
+                <use xlink:href="#disable-1"> </use>
+              </svg>Страница входа</a></li>
           </ul>
         </nav>
         <div class="content-inner w-100">
           <!-- Page Header-->
           <header class="bg-white shadow-sm px-4 py-3 z-index-20">
             <div class="container-fluid px-0">
-              <h2 class="mb-0 p-1">Tables</h2>
+              <h2 class="mb-0 p-1">Таблицы</h2>
             </div>
           </header>
           <!-- Breadcrumb-->
@@ -207,8 +67,8 @@
             <div class="container-fluid">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 py-3">
-                  <li class="breadcrumb-item"><a class="fw-light" th:href="@{/emploee}">Home</a></li>
-                  <li class="breadcrumb-item active fw-light" aria-current="page">Tables</li>
+                  <li class="breadcrumb-item"><a class="fw-light" th:href="@{/dashboard}">Главная</a></li>
+                  <li class="breadcrumb-item active fw-light" aria-current="page">Таблицы расходов</li>
                 </ol>
               </nav>
             </div>
@@ -268,7 +128,7 @@
                       <div class="table-responsive">
                         <form method="post" th:action="@{/additional-expense}">
                           <div class="form-group">
-                            <select th:name = "name" class="form-select" id="expense" required="required">
+                            <select th:name = "category" class="form-select" id="expense" required="required">
                               <option>Выберите категорию</option>
                               <option th:each="category : ${T(carwash.dibo.common.ExpenseCategory).values()}"
                                       th:value="${category}"
@@ -278,18 +138,10 @@
                           </div>
                           <div class="form-group">
                             <div class="col"><hr></div>
-                            <select th:name="quantityToChange" class="form-select"  id="dips" required="required">
-                              <option>Выберите количество</option>
-                              <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}">
-                            </select>
+                              <input class="form-control" th:name="description" id="description" type="text" placeholder="Введите описание...">
                           </div>
                           <div class="col"><hr></div>
-                          <select th:name="status" class="form-select" id="process" required="required">
-                            <option>Выберите процесс</option>
-                            <option th:each="autoChemistry : ${T(carwash.dibo.common.AutoChemistryStatus).values()}"
-                                    th:value="${autoChemistry}"
-                                    th:text="${autoChemistry.getName()}">
-                            </option>
+                            <input class="form-control" th:name="cost" id="cost" type="number" placeholder="Укажите стоимость...">
                           </select>
                           <button class="btn btn-primary mt-3" type="submit">Подтвердить</button>
                         </form>
@@ -327,8 +179,8 @@
                               <td th:text="${autoChemistry.getName()}">Наименование</td>
                               <td th:text="${autoChemistry.getQuantityToChange()}">Количество</td>
                               <td>
-                                <span th:if="${autoChemistry.isPurchase}">Добавлено на склад</span>
-                                <span th:unless="${autoChemistry.isPurchase}">Потрачено</span>
+                                <span th:if="${autoChemistry.isPurchase()}">Добавлено на склад</span>
+                                <span th:unless="${autoChemistry.isPurchase()}">Потрачено</span>
                               </td>
                             </tr>
                             </tbody>
@@ -355,7 +207,7 @@
                           <div class="form-group">
                             <select th:name = "name" class="form-select" id="autoChemistry" required="required">
                               <option>Выберите автохимию</option>
-                              <option th:each="autoChemistry : ${T(carwash.dibo.common.AutoChemistryGood).values()}"
+                              <option th:each="autoChemistry : ${T(carwash.dibo.warehouse.AutoChemistryGood).values()}"
                                       th:value="${autoChemistry.getName()}"
                                       th:text="${autoChemistry.getName()}">
                               </option>
@@ -371,7 +223,7 @@
                             <div class="col"><hr></div>
                             <select th:name="status" class="form-select" id="process" required="required">
                             <option>Выберите процесс</option>
-                            <option th:each="autoChemistry : ${T(carwash.dibo.common.AutoChemistryStatus).values()}"
+                            <option th:each="autoChemistry : ${T(carwash.dibo.warehouse.AutoChemistryStatus).values()}"
                                     th:value="${autoChemistry}"
                                     th:text="${autoChemistry.getName()}">
                             </option>
@@ -474,19 +326,7 @@
             </div>
           </section>
           <!-- Page Footer-->
-          <footer class="position-absolute bottom-0 bg-darkBlue text-white text-center py-3 w-100 text-xs" id="footer">
-            <div class="container-fluid">
-              <div class="row gy-2">
-                <div class="col-sm-6 text-sm-start">
-                  <p class="mb-0">Your company &copy; 2017-2021</p>
-                </div>
-                <div class="col-sm-6 text-sm-end">
-                  <p class="mb-0">Design by <a href="https://bootstrapious.com/p/admin-template" class="text-white text-decoration-none">Bootstrapious</a></p>
-                  <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-                </div>
-              </div>
-            </div>
-          </footer>
+          <div th:replace="footer :: footer"></div>
         </div>
       </div>
     </div>
