@@ -1,4 +1,4 @@
-package carwash.dibo.common;
+package carwash.dibo.warehouse;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

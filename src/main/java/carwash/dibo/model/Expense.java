@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "additional_expense")
+@Table(name = "expense")
 
 public class Expense {
 

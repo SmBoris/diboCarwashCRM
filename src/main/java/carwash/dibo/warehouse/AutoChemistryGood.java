@@ -1,4 +1,4 @@
-package carwash.dibo.common;
+package carwash.dibo.warehouse;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,4 +12,8 @@ public enum AutoChemistryGood {
     PRESSURE_WASH_FOAM("Предварительная мойка");
 
     private final String name;
+
+    public String getName(){
+        return this.name;
+    }
 }

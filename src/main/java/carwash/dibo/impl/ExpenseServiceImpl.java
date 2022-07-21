@@ -12,15 +12,15 @@ import java.util.List;
 @AllArgsConstructor
 public class ExpenseServiceImpl implements ExpenseService {
 
-    private final ExpenseRepository additionalExpenseRepository;
+    private final ExpenseRepository expenseRepository;
 
     @Override
     public void save(Expense expense) {
-        additionalExpenseRepository.save(expense);
+        expenseRepository.save(expense);
     }
 
     @Override
     public List<Expense> getLast5Rows() {
-        return additionalExpenseRepository.findTop5ByOrderByIdDesc();
+        return expenseRepository.findTop5ByOrderByIdDesc();
     }
 }

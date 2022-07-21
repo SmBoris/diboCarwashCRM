@@ -57,7 +57,6 @@ public class MalfunctionsServiceImpl implements MalfunctionsService {
                 " by" + malfunctions.getUser().getUsername());
     }
 
-    @CacheEvict(value = "malfList", allEntries = true)
     @Override
     public void closeMalfunction(Malfunctions malfunctions) {
         malfunctions.setResolved(true);

@@ -12,7 +12,8 @@ public enum ExpenseCategory {
     SERVICES_OF_ORGANIZATION("Услуги организаций"),
     SERVICES_OF_INDIVIDUALS("Услуги индивидуальных лиц"),
     FORCE_MAJOR("Форс мажор"),
-    GARBAGE_COLLECTION("Вывоз мусора");
+    GARBAGE_COLLECTION("Вывоз мусора"),
+    OTHER("Другое");
 
     private final String name;
 }

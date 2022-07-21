@@ -21,9 +21,10 @@ public class UtilityBills {
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateOfAdd;
+    private Date updateDate;
 
     private int month;
+    private int year;
 
     private int bigWaterMeterValue;
     private int smallWaterMeterValue;

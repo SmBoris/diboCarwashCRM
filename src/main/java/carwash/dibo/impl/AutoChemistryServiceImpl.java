@@ -1,15 +1,16 @@
 package carwash.dibo.impl;
 
-import carwash.dibo.common.AutoChemistryStatus;
+import carwash.dibo.warehouse.AutoChemistryGood;
+import carwash.dibo.warehouse.AutoChemistryStatus;
+import carwash.dibo.warehouse.WarehouseUsable;
 import carwash.dibo.exception.CantBeNegativeException;
 import carwash.dibo.model.AutoChemistry;
 import carwash.dibo.repository.AutoChemistryRepository;
 import carwash.dibo.service.AutoChemistryService;
-import carwash.dibo.service.StoreQuantityService;
+import carwash.dibo.warehouse.WarehouseService;
 import carwash.dibo.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.bridge.IMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,40 +20,51 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class AutoChemistryServiceImpl implements AutoChemistryService {
+public class AutoChemistryServiceImpl implements AutoChemistryService, WarehouseUsable<AutoChemistryStatus> {
 
     AutoChemistryRepository autoChemistryRepository;
-    StoreQuantityService storeQuantityService;
+    WarehouseService warehouseService;
     UserService userService;
 
     @Override
-    public void save(AutoChemistry autoChemical) {
-        autoChemistryRepository.save(autoChemical);
+    public void save(AutoChemistry autoChemistry) {
+        autoChemistryRepository.save(autoChemistry);
     }
 
     @Override
-    public String refueled(String name, int quantity, AutoChemistryStatus status) {
-        
-        String message = "";
-        
+    public String refueled(AutoChemistry autoChemistry) {
+        String message;
+        boolean isPressureWashFoam = isPressureWashFoam(autoChemistry.getName());
+
+        //Use active foam when refueled pressure active foam
+        if (isPressureWashFoam){
+            if (isPurchase(autoChemistry.getStatus())){
+                return  "Предварительная мойка не закупается на склад";
+            }
+            autoChemistry.setName(AutoChemistryGood.ACTIVE_FOAM.getName());
+        }
+
         try {
-            message = storeQuantityService.updateCurrentQuantity(name, quantity, status);
+            message = warehouseService.updateCurrentQuantity(
+                    autoChemistry.getName(),
+                    autoChemistry.getQuantityToChange(),
+                    isPurchase(autoChemistry.getStatus()), AutoChemistryServiceImpl.class);
         }
         catch (CantBeNegativeException ex){
             return "На складе не хватает необходимого количества";
         }
 
-        AutoChemistry autoChemistry = new AutoChemistry();
         autoChemistry.setDate(new Date());
-        autoChemistry.setName(name);
-        autoChemistry.setQuantityToChange(quantity);
-        autoChemistry.setStatus(status);
-        autoChemistry.setCurrentQuantity(storeQuantityService.getCurrentQuantityByName(name));
+        autoChemistry.setCurrentQuantity(warehouseService.getCurrentQuantityByName(autoChemistry.getName()));
         autoChemistry.setUser(userService.getCurrentUser());
+        
+        //Use pressure wash foam for history refueled
+        if (isPressureWashFoam) { autoChemistry.setName(AutoChemistryGood.PRESSURE_WASH_FOAM.getName());}
 
         save(autoChemistry);
 
         return message;
+
     }
     
     @Override
@@ -61,5 +73,14 @@ public class AutoChemistryServiceImpl implements AutoChemistryService {
                 .stream()
                 .limit(4)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isPurchase(AutoChemistryStatus status) {
+        return status.equals(AutoChemistryStatus.PURCHASE);
+    }
+
+    private boolean isPressureWashFoam(String name){
+        return name.equals(AutoChemistryGood.PRESSURE_WASH_FOAM.getName());
     }
 }

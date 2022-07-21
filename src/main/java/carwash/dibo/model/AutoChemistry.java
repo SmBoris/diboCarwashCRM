@@ -1,6 +1,6 @@
 package carwash.dibo.model;
 
-import carwash.dibo.common.AutoChemistryStatus;
+import carwash.dibo.warehouse.AutoChemistryStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +31,6 @@ public class AutoChemistry {
     private int currentQuantity;
 
     public boolean isPurchase(){
-        return getStatus().equals(AutoChemistryStatus.PURCHASE);
+        return status.equals(AutoChemistryStatus.PURCHASE);
     }
 }
