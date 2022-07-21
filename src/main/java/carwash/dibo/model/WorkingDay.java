@@ -28,6 +28,9 @@ public class WorkingDay {
 
     @ManyToOne
     private User user;
+
+    @OneToOne
+    private DailyWeather dailyWeather;
 }
 
 

@@ -18,19 +18,24 @@ public class WorkingDayValidator {
 
     private final WorkingDayService workingDayService;
 
-    public String openCloseShiftValidate(){
-        LocalDate openDate = DateConverter.convertToLocalDate(new Date());
-
+    public String openShiftValidate(){
         WorkingDay lastWorkingDay = workingDayService.findTopByOrderByIdDesc();
+
+        LocalDate openDate = DateConverter.convertToLocalDate(new Date());
         LocalDate lastOpenDate = DateConverter.convertToLocalDate(lastWorkingDay.getOpenDate());
 
-        if(openDate.isAfter(lastOpenDate)) {
+        if(!openDate.isAfter(lastOpenDate)) {
             return  "Сегодня смена уже открыта";
         }
 
         if (workingDayService.findByOpenTrue().size() > 0){
             return  "Закройте предыдущую смену";
         }
+
+        return "";
+    }
+
+    public String closeShiftValidate(){
 
         if (workingDayService.findByOpenTrue().size() < 1) {
             return "Смена еще не открыта";

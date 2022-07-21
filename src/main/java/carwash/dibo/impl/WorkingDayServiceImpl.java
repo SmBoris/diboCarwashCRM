@@ -1,5 +1,8 @@
 package carwash.dibo.impl;
 
+import carwash.dibo.integration.weather.DailyWeatherService;
+import carwash.dibo.integration.weather.WeatherService;
+import carwash.dibo.model.DailyWeather;
 import carwash.dibo.model.User;
 import carwash.dibo.model.WorkingDay;
 import carwash.dibo.repository.WorkingDayRepository;
@@ -8,13 +11,9 @@ import carwash.dibo.service.WorkingDayService;
 import carwash.dibo.utils.DateConverter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +24,9 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     private final WorkingDayRepository workingDayRepository;
     private final UserService userService;
+    private final WeatherService weatherService;
+    private final DailyWeatherService dailyWeatherService;
+    private final DailyWeather dailyWeather;
 
     @Override
     public void openWorkingDay() {
@@ -40,6 +42,15 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     public void closeWorkingDay(int tenCoins, int diboCoins, int cashOnBox, int nonCash) {
+
+        dailyWeatherService.updateDailyWeather(
+                weatherService.getDailyAverageTemp(),
+                weatherService.getDailyAverageWindSpeed(),
+                weatherService.getDailyAverageCondition());
+
+        dailyWeatherService.save(dailyWeather);
+        weatherService.clearCurrentHistory();
+
         WorkingDay openDay = workingDayRepository.findByOpenTrue().get(0);
         openDay.setTenCoins(tenCoins);
         openDay.setDiboCoins(diboCoins);
@@ -47,6 +58,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
         openDay.setNonCash(nonCash);
         openDay.setOpen(false);
         openDay.setCloseDate(new Date());
+        openDay.setDailyWeather(dailyWeather);
 
         workingDayRepository.save(openDay);
 
