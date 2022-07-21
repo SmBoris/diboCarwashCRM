@@ -1,27 +1,26 @@
 package carwash.dibo.controller;
 
-import carwash.dibo.integration.WeatherService;
-import carwash.dibo.common.AutoChemistryGood;
+import carwash.dibo.integration.weather.Weather;
+import carwash.dibo.integration.weather.WeatherService;
+import carwash.dibo.warehouse.AutoChemistryGood;
 import carwash.dibo.model.Malfunctions;
 import carwash.dibo.model.WorkingDay;
 import carwash.dibo.service.*;
 import carwash.dibo.validator.WorkingDayValidator;
+import carwash.dibo.warehouse.WarehouseService;
 import lombok.AllArgsConstructor;
-import org.json.JSONException;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
 public class DashboardController {
 
-    private final StoreQuantityService storeQuantityService;
+    private final WarehouseService warehouseService;
     private final WorkingDayService workingDayService;
     private final MalfunctionsService malfunctionsService;
     private final WeatherService weatherService;
@@ -33,8 +32,10 @@ public class DashboardController {
     }
 
     @ModelAttribute("weather")
-    public double weatherTemp() throws InterruptedException, JSONException, IOException {
-        return weatherService.getCurrentTemperature();
+    public double weatherTemp() {
+        Weather weather = weatherService.getCurrentWeather();
+        weatherService.saveCurrentHistory(weather);
+        return weather.getWeatherTemperature();
     }
 
     @ModelAttribute("oneWeekWorkingList")
@@ -44,7 +45,7 @@ public class DashboardController {
 
     @ModelAttribute("storeQuantityFoam")
     public int getCurrentQuantityFoam(){
-        return storeQuantityService.getCurrentQuantityByName(AutoChemistryGood.ACTIVE_FOAM.getName());
+        return warehouseService.getCurrentQuantityByName(AutoChemistryGood.ACTIVE_FOAM.getName());
     }
 
     @ModelAttribute("malfunctionsList")
@@ -54,13 +55,13 @@ public class DashboardController {
 
     @ModelAttribute("storeQuantityWax")
     public int getCurrentQuantityWax(){
-        return storeQuantityService.getCurrentQuantityByName(AutoChemistryGood.WAX.getName());
+        return warehouseService.getCurrentQuantityByName(AutoChemistryGood.WAX.getName());
     }
 
     @GetMapping("/openDay")
     public String openDay(Model model) {
 
-        String error = workingDayValidator.openCloseShiftValidate();
+        String error = workingDayValidator.openShiftValidate();
         if (!error.isEmpty()){
             model.addAttribute("error", error);
             return "dashboard";
@@ -72,9 +73,9 @@ public class DashboardController {
     }
 
     @PostMapping("/closeDay")
-    public String closeDay(@ModelAttribute WorkingDay day, Model model, BindingResult bindingResult){
+    public String closeDay(@ModelAttribute WorkingDay day, Model model){
 
-        String error = workingDayValidator.openCloseShiftValidate();
+        String error = workingDayValidator.closeShiftValidate();
         if (!error.isEmpty()) {
             model.addAttribute("error", error);
             return "dashboard";
