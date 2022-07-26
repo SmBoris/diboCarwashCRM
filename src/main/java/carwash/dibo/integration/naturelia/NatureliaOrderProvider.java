@@ -1,4 +1,4 @@
-package carwash.dibo.integration;
+package carwash.dibo.integration.naturelia;
 
 import carwash.dibo.utils.ParamsHelper;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package carwash.dibo.integration;
+package carwash.dibo.integration.naturelia;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
