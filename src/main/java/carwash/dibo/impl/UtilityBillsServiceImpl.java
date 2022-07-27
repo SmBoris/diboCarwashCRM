@@ -1,7 +1,6 @@
 package carwash.dibo.impl;
 
 import carwash.dibo.bills.UtilityBillsHandler;
-import carwash.dibo.bills.UtilityMeter;
 import carwash.dibo.bills.UtilityMeterType;
 import carwash.dibo.model.UtilityBills;
 import carwash.dibo.repository.UtilityBillsRepository;
@@ -9,15 +8,10 @@ import carwash.dibo.service.UtilityBillsService;
 import carwash.dibo.utils.DateConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sun.util.resources.LocaleData;
 
-import java.text.DateFormat;
-import java.time.Month;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
-import java.time.LocalDate;
 
 @Service
 @AllArgsConstructor

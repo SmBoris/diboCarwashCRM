@@ -1,15 +1,11 @@
 package carwash.dibo.model;
 
 import carwash.dibo.utils.DateConverter;
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.format.TextStyle;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Entity
 @Data
